@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@shared/utils": "workspace:^",
     "vue": "^3.3.11"
   },
   "devDependencies": {
+    "@shared/utils": "workspace:*",
     "@vitejs/plugin-vue": "^4.5.2",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
