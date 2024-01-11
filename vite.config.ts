@@ -1,7 +1,6 @@
 import { ConfigEnv, UserConfig } from 'vite';
-import { userConfig as baseUserConfig, loadCurrentEnv } from '../../vite.config.base';
+import { userConfig as baseUserConfig, loadCurrentEnv, pathResolve } from '../../vite.config.base';
 import { wrapperEnv } from '@shared/utils';
-// import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfig => {
@@ -10,19 +9,19 @@ export default ({ command }: ConfigEnv): UserConfig => {
   const currentEnv = loadCurrentEnv(command, root);
   const env = wrapperEnv(currentEnv);
 
-  console.log('root', root, env);
+  console.log('root', pathResolve('src'), env);
   return {
     ...baseUserConfig,
     resolve: Object.assign({}, baseUserConfig.resolve, {
       alias: [
         {
           find: '@/',
-          replacement: `src/`,
+          replacement: `${pathResolve('src')}/`,
         },
       ],
     }),
     server: Object.assign({}, baseUserConfig.server, {
-      port: 17016,
+      port: env.VITE_APP_PORT,
     }),
   } as UserConfig;
 };

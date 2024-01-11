@@ -1,4 +1,3 @@
-
 {
   "extends":"../../tsconfig.json",
   "include": [
@@ -10,7 +9,19 @@
     "test/**/*.tsx",
     "test/**/*.js",
     "test/**/*.jsx",
+    "types/**/*.d.ts",
+    "../../types/**/*.d.ts",
     "vite.config.ts"
   ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types",
+    ]
+  },
   "exclude": ["node_modules"]
 }
