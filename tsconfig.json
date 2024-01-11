@@ -10,13 +10,15 @@
     "test/**/*.js",
     "test/**/*.jsx",
     "types/**/*.d.ts",
-    "../../types/**/*.d.ts",
     "vite.config.ts"
   ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@shared/*": ["../../shared/*"],
+      "@root/*": ["../../*"],
+
     },
     "typeRoots": [
       "./node_modules/@types",

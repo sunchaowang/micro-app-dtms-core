@@ -1,9 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { onMounted } from 'vue';
+
+  onMounted(() => {
+    console.log('home mounted');
+  });
+</script>
 
 <template>
   <div>
-    <h1> dtms-core home </h1>
+    <h1> core home </h1>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="less"></style>

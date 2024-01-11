@@ -14,14 +14,14 @@
 
 <script setup lang="ts">
   import { useRouter, useRoute } from '@shared/router';
-  import { computed } from 'vue';
+  import { computed, watch } from 'vue';
   const router = useRouter();
   const route = useRoute();
 
   const app = [
     {
       name: 'module-car',
-      url: 'http://localhost:5173/module-car',
+      url: 'http://localhost:17017/module-car',
       autoLoad: true,
       autoRender: true,
       style: {
@@ -38,7 +38,7 @@
     },
     {
       name: 'module-coal',
-      url: 'http://localhost:5174/module-coal',
+      url: 'http://localhost:17018/module-coal',
       autoLoad: true,
       autoRender: true,
       style: {
@@ -61,6 +61,13 @@
     const appConfig = app.find((item) => item.name === `module-${name}`) ?? {};
     return appConfig;
   });
+
+  watch(
+    () => microApp,
+    () => {
+      console.log('microApp', microApp);
+    },
+  );
 </script>
 
 <style scoped></style>

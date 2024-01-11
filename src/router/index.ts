@@ -1,11 +1,21 @@
-import { Router, createRouter, createWebHistory } from '@shared/router';
+import { Router, createRouter, createWebHashHistory } from '@shared/router';
 
 const router: Router = createRouter({
-  history: createWebHistory(import.meta?.env?.BASE_URL),
+  history: createWebHashHistory('/'),
+  strict: true,
+  scrollBehavior: () => {
+    return { top: 0 };
+  },
   routes: [
     // home
     {
       path: '/',
+      redirect() {
+        return '/home';
+      },
+    },
+    {
+      path: '/home',
       name: 'home',
       component: () => import('@/views/home.vue'),
     },
@@ -18,4 +28,11 @@ const router: Router = createRouter({
   ],
 });
 
-export default router;
+console.log(router, 'router');
+
+router.beforeEach((to, from, next) => {
+  console.log('router.beforeEach', to, from);
+  next();
+});
+
+export { router };

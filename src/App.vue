@@ -21,6 +21,7 @@
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: 0 }" />
       <a-layout-content :style="{ margin: '24px 16px 0' }">
+        <h1> APP </h1>
         <RouterView />
       </a-layout-content>
       <a-layout-footer style="text-align: center">
@@ -77,6 +78,7 @@
     // MicroApp.preFetch(() => {
     //   return [];
     // });
+    console.log('mounted');
   });
 </script>
 <style scoped>
