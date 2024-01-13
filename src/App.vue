@@ -4,12 +4,7 @@
       height: '100vh',
     }"
   >
-    <a-layout-sider
-      breakpoint="lg"
-      collapsed-width="0"
-      @collapse="onCollapse"
-      @breakpoint="onBreakpoint"
-    >
+    <a-layout-sider>
       <div class="logo"></div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item v-for="item in menuItems" :key="item.key" @click="item.click">
@@ -31,18 +26,11 @@
   </a-layout>
 </template>
 <script lang="ts" setup>
-  import { ref, onMounted, reactive } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { UserOutlined } from '@ant-design/icons-vue';
   import { useRouter } from '@shared/router';
 
   const router = useRouter();
-  const onCollapse = (collapsed: boolean, type: string) => {
-    console.log(collapsed, type);
-  };
-
-  const onBreakpoint = (broken: boolean) => {
-    console.log(broken);
-  };
 
   const selectedKeys = ref<string[]>(['1']);
 
@@ -57,18 +45,18 @@
     },
     {
       key: '2',
-      text: 'module-car',
+      text: 'app-car',
       click: () => {
         selectedKeys.value = ['2'];
-        router.push({ path: '/module-car' });
+        router.push({ path: '/app-car' });
       },
     },
     {
       key: '3',
-      text: 'module-coal',
+      text: 'app-coal',
       click: () => {
         selectedKeys.value = ['3'];
-        router.push({ path: '/module-coal' });
+        router.push({ path: '/app-coal' });
       },
     },
   ]);

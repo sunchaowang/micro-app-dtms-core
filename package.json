@@ -9,10 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@shared/utils": "workspace:*",
-    "@shared/router": "workspace:*"
+    "@shared/router": "workspace:*",
+    "@shared/store": "workspace:*",
+    "@shared/utils": "workspace:*"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

@@ -1,5 +1,8 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
+  import { useUserStore } from '@/store/modules';
+
+  const userStore = useUserStore();
 
   onMounted(() => {
     console.log('home mounted');
@@ -8,7 +11,7 @@
 
 <template>
   <div>
-    <h1> core home </h1>
+    <h1> userStore{{ userStore }} core home </h1>
   </div>
 </template>
 

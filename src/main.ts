@@ -3,8 +3,11 @@ import './style.css';
 import App from './App.vue';
 import Antd from 'ant-design-vue';
 import { router } from './router';
+import { store } from './store';
+
 import 'ant-design-vue/dist/antd.css';
 import microApp from '@micro-zoe/micro-app';
+
 try {
   microApp.start({
     lifeCycles: {
@@ -31,6 +34,7 @@ try {
 const app = createApp(App);
 app.use(Antd);
 app.use(router);
+app.use(store);
 app.mount('#app');
 
 // 拦截异常错误

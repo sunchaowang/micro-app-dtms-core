@@ -1,38 +1,45 @@
-import { Router, createRouter, createWebHashHistory } from '@shared/router';
+import {
+  Router,
+  getRouter,
+  RouteRecordRaw,
+  createWebHashHistory,
+  useBeforeEach,
+  useAfterEach,
+} from '@shared/router';
 
-const router: Router = createRouter({
-  history: createWebHashHistory('/'),
-  strict: true,
-  scrollBehavior: () => {
-    return { top: 0 };
+const routes: RouteRecordRaw[] = [
+  // home
+  {
+    path: '/',
+    redirect() {
+      return '/home';
+    },
   },
-  routes: [
-    // home
-    {
-      path: '/',
-      redirect() {
-        return '/home';
-      },
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import('@/views/home.vue'),
-    },
-    // coal
-    {
-      path: '/module-:path*',
-      name: 'micro-module',
-      component: () => import('@/views/micro-module/index.vue'),
-    },
-  ],
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/home.vue'),
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login.vue'),
+  },
+  // coal
+  {
+    path: '/app-:path*',
+    name: 'micro-app',
+    component: () => import('@/views/micro-app/index.vue'),
+  },
+];
+const router: Router = getRouter({
+  history: createWebHashHistory(),
+  routes,
 });
 
-console.log(router, 'router');
-
-router.beforeEach((to, from, next) => {
-  console.log('router.beforeEach', to, from);
-  next();
-});
+// before each
+useBeforeEach(router);
+// after each
+useAfterEach(router);
 
 export { router };

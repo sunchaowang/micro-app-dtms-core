@@ -1,7 +1,8 @@
 <template>
   <h1>MicroApp</h1>
   {{ route.params }} {{ microApp }}
-  <micro-app
+  <Component
+    :is="'micro-app'"
     v-if="microApp.name"
     :name="microApp.name"
     :url="microApp.url"
@@ -21,7 +22,7 @@
   const app = [
     {
       name: 'module-car',
-      url: 'http://localhost:17017/module-car',
+      url: 'http://localhost:17017/app-car',
       autoLoad: true,
       autoRender: true,
       style: {
@@ -38,7 +39,7 @@
     },
     {
       name: 'module-coal',
-      url: 'http://localhost:17018/module-coal',
+      url: 'http://localhost:17018/app-coal',
       autoLoad: true,
       autoRender: true,
       style: {
