@@ -2,9 +2,10 @@ import {
   Router,
   getRouter,
   RouteRecordRaw,
-  createWebHashHistory,
   useBeforeEach,
   useAfterEach,
+  createWebHistory,
+  createWebHashHistory,
 } from '@shared/router';
 
 const routes: RouteRecordRaw[] = [
@@ -27,13 +28,13 @@ const routes: RouteRecordRaw[] = [
   },
   // coal
   {
-    path: '/app-:path*',
+    path: '/base/:path*',
     name: 'micro-app',
     component: () => import('@/views/micro-app/index.vue'),
   },
 ];
 const router: Router = getRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

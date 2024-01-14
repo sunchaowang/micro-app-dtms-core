@@ -1,5 +1,5 @@
 import { ConfigEnv, UserConfig } from 'vite';
-import { userConfig as baseUserConfig, loadCurrentEnv } from '../../vite.config.base';
+import { userConfig as baseUserConfig, loadCurrentEnv } from '../../../vite.config.base';
 import { wrapperEnv } from '@shared/utils';
 import { resolve as pathResolve, join as pathJoin } from 'path';
 
@@ -23,7 +23,7 @@ export default ({ command }: ConfigEnv): UserConfig => {
         },
         // {
         //   find: '@shared/',
-        //   replacement: `${pathJoin(__dirname, '..', '..', 'shared')}/`,
+        //   replacement: `${pathJoin(__dirname, '..', '../', 'shared')}/`,
         // },
       ],
     }),

@@ -8,58 +8,67 @@
       <div class="logo"></div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item v-for="item in menuItems" :key="item.key" @click="item.click">
-          <user-outlined />
+          <template #icon>
+            <UserOutlined />
+          </template>
           <span class="nav-text"> {{ item.text }} </span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header :style="{ background: '#fff', padding: 0 }" />
+      <a-layout-header :style="{ background: '#fff', padding: 0 }">
+        Root Count: {{ count }} <button @click="count++">+</button>
+      </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
-        <h1> APP </h1>
+        <!--        <h1> APP </h1>-->
         <RouterView />
       </a-layout-content>
-      <a-layout-footer style="text-align: center">
-        Ant Design ©2018 Created by Ant UED
-      </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
 <script lang="ts" setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { UserOutlined } from '@ant-design/icons-vue';
   import { useRouter } from '@shared/router';
+  import microApp from '@micro-zoe/micro-app';
 
   const router = useRouter();
 
   const selectedKeys = ref<string[]>(['1']);
+  const count = ref(0);
 
   const menuItems = ref([
     {
       key: '1',
-      text: 'home',
+      text: '首页',
       click: () => {
         selectedKeys.value = ['1'];
-        router.push({ path: '/' });
+        router.push({ path: '/home' });
       },
     },
     {
       key: '2',
-      text: 'app-car',
+      text: '汽车',
       click: () => {
         selectedKeys.value = ['2'];
-        router.push({ path: '/app-car' });
+        router.push({ path: '/base/car' });
       },
     },
     {
       key: '3',
-      text: 'app-coal',
+      text: '煤炭',
       click: () => {
         selectedKeys.value = ['3'];
-        router.push({ path: '/app-coal' });
+        router.push({ path: '/base/coal' });
       },
     },
   ]);
+
+  watch(count, () => {
+    microApp.setGlobalData({
+      rootCount: count.value,
+    });
+  });
 
   onMounted(() => {
     // 预加载

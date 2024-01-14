@@ -1,74 +1,69 @@
 <template>
-  <h1>MicroApp</h1>
-  {{ route.params }} {{ microApp }}
-  <Component
-    :is="'micro-app'"
-    v-if="microApp.name"
-    :name="microApp.name"
-    :url="microApp.url"
-    :baseRoute="'/car'"
+  <!--  <h1>MicroApp</h1>-->
+  <!--  {{ route }} {{ currentMicroApp }}-->
+  <micro-app
+    v-if="currentMicroApp.name"
+    :name="currentMicroApp.name"
+    :url="currentMicroApp.url"
+    :base-route="`/${currentMicroApp.name}/`"
     iframe
-    @mounted="microApp.mounted"
-    @unmounted="microApp.unmounted"
+    class="micro-app"
+    disable-memory-router
+    @mounted="currentMicroApp.mounted"
+    @unmounted="currentMicroApp.unmounted"
   />
 </template>
 
 <script setup lang="ts">
   import { useRouter, useRoute } from '@shared/router';
-  import { computed, watch } from 'vue';
+  import { computed, onMounted, watch } from 'vue';
+  import microApp from '@micro-zoe/micro-app';
+  import { getAppConfig } from '@/views/micro-app/indexData';
   const router = useRouter();
   const route = useRoute();
 
-  const app = [
-    {
-      name: 'module-car',
-      url: 'http://localhost:17017/app-car',
-      autoLoad: true,
-      autoRender: true,
-      style: {
-        height: '100%',
-      },
-      props: {
-        name: 'module-car',
-      },
-      events: () => {},
-      mounted: () => {
-        console.log('module-car mounted');
-      },
-      unmounted: () => {},
-    },
-    {
-      name: 'module-coal',
-      url: 'http://localhost:17018/app-coal',
-      autoLoad: true,
-      autoRender: true,
-      style: {
-        height: '100%',
-      },
-      props: {
-        name: 'module-coal',
-      },
-      events: () => {},
-      mounted: () => {
-        console.log('module-coal mounted');
-      },
-      unmounted: () => {},
-    },
-  ];
-
-  // microApp 的配置
-  const microApp = computed(() => {
-    const name = route.params?.path?.[0] as string;
-    const appConfig = app.find((item) => item.name === `module-${name}`) ?? {};
-    return appConfig;
+  onMounted(() => {
+    console.log('micro-app mounted');
+    getAppConfig();
   });
 
+  const app = getAppConfig();
+
+  // currentMicroApp 的配置
+  const currentMicroApp = computed(() => {
+    const name = route.params?.path?.[0] as string;
+    return app.find((item) => item.name === `base-${name}`) ?? {};
+  });
+
+  // 监听路由 下发路径
   watch(
-    () => microApp,
+    () => route.fullPath,
     () => {
-      console.log('microApp', microApp);
+      console.log('router path', route.path);
+      microApp.setData(currentMicroApp.value.name, {
+        path: route.path.replace(`/${currentMicroApp.value.name}/`.replace('-', '/'), '/'),
+      });
+    },
+    {
+      deep: true,
+    },
+  );
+
+  watch(
+    () => route,
+    () => {
+      console.log('currentMicroApp', route.path);
+    },
+    {
+      immediate: true,
+      deep: true,
     },
   );
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+  .micro-app {
+    width: 100%;
+    height: 100%;
+  }
+</style>
