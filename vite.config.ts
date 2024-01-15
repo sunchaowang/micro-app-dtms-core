@@ -30,5 +30,27 @@ export default ({ command }: ConfigEnv): UserConfig => {
     server: Object.assign({}, baseUserConfig.server, {
       port: env.VITE_APP_PORT,
     }),
+    build: {
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {},
+        },
+        onwarn: (warning, warn) => {
+          if (warning.message.includes('#__PURE__')) {
+            return;
+          }
+          warn(warning);
+        },
+      },
+      brotliSize: false,
+      chunkSizeWarningLimit: 2000,
+      terserOptions: {
+        compress: {
+          keep_infinity: true,
+          // drop_console: true,
+        },
+      },
+    },
   } as UserConfig;
 };

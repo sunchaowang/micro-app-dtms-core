@@ -24,10 +24,10 @@
 
   onMounted(() => {
     console.log('micro-app mounted');
-    getAppConfig();
+    // getAppConfig();
   });
 
-  const app = getAppConfig();
+  const app = getAppConfig(router);
 
   // currentMicroApp 的配置
   const currentMicroApp = computed(() => {

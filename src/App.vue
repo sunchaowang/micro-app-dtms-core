@@ -7,7 +7,7 @@
     <a-layout-sider>
       <div class="logo"></div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item v-for="item in menuItems" :key="item.key" @click="item.click">
+        <a-menu-item v-for="item in menuItems" :key="item.key" @click="item.click(item.path)">
           <template #icon>
             <UserOutlined />
           </template>
@@ -29,10 +29,11 @@
 <script lang="ts" setup>
   import { ref, onMounted, watch } from 'vue';
   import { UserOutlined } from '@ant-design/icons-vue';
-  import { useRouter } from '@shared/router';
+  import { useRouter, useRoute } from '@shared/router';
   import microApp from '@micro-zoe/micro-app';
 
   const router = useRouter();
+  const route = useRoute();
 
   const selectedKeys = ref<string[]>(['1']);
   const count = ref(0);
@@ -41,25 +42,28 @@
     {
       key: '1',
       text: '首页',
-      click: () => {
+      path: '/home',
+      click: (path) => {
         selectedKeys.value = ['1'];
-        router.push({ path: '/home' });
+        router.push({ path });
       },
     },
     {
       key: '2',
       text: '汽车',
-      click: () => {
+      path: '/base/car',
+      click: (path) => {
         selectedKeys.value = ['2'];
-        router.push({ path: '/base/car' });
+        router.push({ path });
       },
     },
     {
       key: '3',
       text: '煤炭',
-      click: () => {
+      path: '/base/coal',
+      click: (path) => {
         selectedKeys.value = ['3'];
-        router.push({ path: '/base/coal' });
+        router.push({ path });
       },
     },
   ]);
@@ -75,8 +79,20 @@
     // MicroApp.preFetch(() => {
     //   return [];
     // });
-    console.log('mounted');
+    selectedKeys.value = menuItems.value.find((item) => item.path === route.path)?.key ?? ['1'];
+    // console.log('mounted route path', route.path);
   });
+
+  watch(
+    () => route,
+    () => {
+      selectedKeys.value = menuItems.value.find((item) => item.path === route.path)?.key ?? ['1'];
+    },
+    {
+      deep: true,
+      immediate: true,
+    },
+  );
 </script>
 <style scoped>
   #components-layout-demo-responsive .logo {
